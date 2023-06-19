@@ -1,0 +1,1 @@
+[06-Jun-2023 06:10:21 UTC] PHP Fatal error:  Composer detected issues in your platform: Your Composer dependencies require a PHP version ">= 8.1.0". You are running 8.0.27. in /home/oprimeco/dashboard.oprime.com.ng/vendor/composer/platform_check.php on line 24
