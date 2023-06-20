@@ -88,7 +88,7 @@
                                 @enderror
                               </div>
 
-                              <h6>If you are still  unable to login pls kindly use <b style="color: red;">123456</b> as your password</h6>
+                              <h6>If you are still  unable to login pls kindly use <b style="color: red;">12345678</b> as your password</h6>
                               <br>
                               <div class="tp-forgot-password d-flex justify-content-between">
                                  <div class="checkbox">
