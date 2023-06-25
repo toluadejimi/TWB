@@ -61,34 +61,33 @@ class ProductController extends Controller
                 User::where('id', Auth::id())->increment('wallet', $amount);
                 Transaction::where('trx_ref', $trx_id)->where('status', 0)->update(['status' => 1]);
 
-            
+
 
 
                 $usr = User::where('id', Auth::id())->first() ?? null;
 
-                if($usr->email != null){
+                // if ($usr->email != null) {
 
-                    $data = array(
-                        'fromsender' => 'admin@oprime.com.ng', 'Oprime',
-                        'subject' => "Wallet Funded",
-                        'toreceiver' => Auth::user()->email,
-                        'amount' => $amount,
-                        'name' => Auth::user()->name,
-    
-    
-    
-                    );
-    
-    
-                    Mail::send('mails.fund', ["data1" => $data], function ($message) use ($data) {
-                        $message->from($data['fromsender']);
-                        $message->to($data['toreceiver']);
-                        $message->subject($data['subject']);
-                    });
+                //     $data = array(
+                //         'fromsender' => 'admin@oprime.com.ng', 'Oprime',
+                //         'subject' => "Wallet Funded",
+                //         'toreceiver' => Auth::user()->email,
+                //         'amount' => $amount,
+                //         'name' => Auth::user()->name,
 
-                }
 
-              
+
+                //     );
+
+
+                //     Mail::send('mails.fund', ["data1" => $data], function ($message) use ($data) {
+                //         $message->from($data['fromsender']);
+                //         $message->to($data['toreceiver']);
+                //         $message->subject($data['subject']);
+                //     });
+                // }
+
+
 
                 return redirect('user/dashboard')->with('message', "Wallet has been funded with $amount");
             }
@@ -100,7 +99,7 @@ class ProductController extends Controller
             Transaction::where('trx_ref', $trx_id)->where('status', 0)->update(['status' => 2]);
 
 
-       
+
 
             return redirect('user/dashboard')->with('error', 'Transaction Declined');
         }
@@ -125,7 +124,6 @@ class ProductController extends Controller
         if ($amount > Auth::user()->wallet) {
 
             return redirect('user/dashboard')->with('error', 'Insufficient Balance, Fund your wallet');
-
         }
 
         if ($amount > Auth::user()->wallet) {
@@ -157,10 +155,9 @@ class ProductController extends Controller
                 'redirect' => route('dashboard'),
                 'message'  => __('Insufficient Balance, Fund your wallet.')
             ]);
-
         } else {
 
-                User::where('id', Auth::id())->decrement('wallet', $amount);
+            User::where('id', Auth::id())->decrement('wallet', $amount);
 
             $pr = ItemLog::where('id', $request->area_code)->first();
 
@@ -190,55 +187,55 @@ class ProductController extends Controller
             $order->save();
 
 
-          
+
 
             ItemLog::where('id', $request->area_code)->delete();
-
-
-
-            //send mail
-            $data = array(
-                'fromsender' => 'admin@oprime.com.ng', 'Oprime',
-                'subject' => "LOG Purchase",
-                'toreceiver' => Auth::user()->email,
-                'logdata' => $pr->data,
-                'area_code' => $pr->area_code,
-                'name' => Auth::user()->name,
-
-
-
-            );
-
-
-
-            Mail::send('mails.log', ["data1" => $data], function ($message) use ($data) {
-                $message->from($data['fromsender']);
-                $message->to($data['toreceiver']);
-                $message->subject($data['subject']);
-            });
-
-
-        
-                $details = [
-                    'subject' => 'Something bought',
-                    'name' => $data['toreceiver'],
-                    'data'=> $data['logdata']
-                    ];
-                    
-
-
-      
-            FacadesMail::to('yekeenoluwaseun0001@gmail.com')->send(
-                new AdminMail($details)
-
-
-            );
-            }
-            
-
-
-
             return redirect('user/dashboard')->with('message', "Log purchase successful");
+
+        }
+
+        //send mail
+        // $data = array(
+        //     'fromsender' => 'admin@oprime.com.ng', 'Oprime',
+        //     'subject' => "LOG Purchase",
+        //     'toreceiver' => Auth::user()->email,
+        //     'logdata' => $pr->data,
+        //     'area_code' => $pr->area_code,
+        //     'name' => Auth::user()->name,
+
+
+
+        // );
+
+
+
+        // Mail::send('mails.log', ["data1" => $data], function ($message) use ($data) {
+        //     $message->from($data['fromsender']);
+        //     $message->to($data['toreceiver']);
+        //     $message->subject($data['subject']);
+        // });
+
+
+
+        //     $details = [
+        //         'subject' => 'Something bought',
+        //         'name' => $data['toreceiver'],
+        //         'data'=> $data['logdata']
+        //         ];
+
+
+
+
+        // FacadesMail::to('yekeenoluwaseun0001@gmail.com')->send(
+        //     new AdminMail($details)
+
+
+        // );
+        // }
+
+
+
+
 
 
         return back()->with('error', "Insufficient Balance, Fund your wallet");
