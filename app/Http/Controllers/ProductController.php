@@ -66,26 +66,26 @@ class ProductController extends Controller
 
                 $usr = User::where('id', Auth::id())->first() ?? null;
 
-                // if ($usr->email != null) {
+                if ($usr->email != null) {
 
-                //     $data = array(
-                //         'fromsender' => 'admin@oprime.com.ng', 'Oprime',
-                //         'subject' => "Wallet Funded",
-                //         'toreceiver' => Auth::user()->email,
-                //         'amount' => $amount,
-                //         'name' => Auth::user()->name,
-
-
-
-                //     );
+                    $data = array(
+                        'fromsender' => 'admin@twbnumbers.com.ng', 'TWBNumbers',
+                        'subject' => "Wallet Funded",
+                        'toreceiver' => Auth::user()->email,
+                        'amount' => $amount,
+                        'name' => Auth::user()->name,
 
 
-                //     Mail::send('mails.fund', ["data1" => $data], function ($message) use ($data) {
-                //         $message->from($data['fromsender']);
-                //         $message->to($data['toreceiver']);
-                //         $message->subject($data['subject']);
-                //     });
-                // }
+
+                    );
+
+
+                    Mail::send('mails.fund', ["data1" => $data], function ($message) use ($data) {
+                        $message->from($data['fromsender']);
+                        $message->to($data['toreceiver']);
+                        $message->subject($data['subject']);
+                    });
+                }
 
 
 
@@ -195,43 +195,43 @@ class ProductController extends Controller
         }
 
         //send mail
-        // $data = array(
-        //     'fromsender' => 'admin@oprime.com.ng', 'Oprime',
-        //     'subject' => "LOG Purchase",
-        //     'toreceiver' => Auth::user()->email,
-        //     'logdata' => $pr->data,
-        //     'area_code' => $pr->area_code,
-        //     'name' => Auth::user()->name,
+        $data = array(
+            'fromsender' => 'admin@twbnumbers.com.ng', 'TWBNumbers',
+            'subject' => "LOG Purchase",
+            'toreceiver' => Auth::user()->email,
+            'logdata' => $pr->data,
+            'area_code' => $pr->area_code,
+            'name' => Auth::user()->name,
 
 
 
-        // );
+        );
 
 
 
-        // Mail::send('mails.log', ["data1" => $data], function ($message) use ($data) {
-        //     $message->from($data['fromsender']);
-        //     $message->to($data['toreceiver']);
-        //     $message->subject($data['subject']);
-        // });
+        Mail::send('mails.log', ["data1" => $data], function ($message) use ($data) {
+            $message->from($data['fromsender']);
+            $message->to($data['toreceiver']);
+            $message->subject($data['subject']);
+        });
 
 
 
-        //     $details = [
-        //         'subject' => 'Something bought',
-        //         'name' => $data['toreceiver'],
-        //         'data'=> $data['logdata']
-        //         ];
+            $details = [
+                'subject' => 'A new customer purchase',
+                'name' => $data['toreceiver'],
+                'data'=> $data['logdata']
+                ];
 
 
 
 
-        // FacadesMail::to('yekeenoluwaseun0001@gmail.com')->send(
-        //     new AdminMail($details)
+        FacadesMail::to('talkwithblac@gmail.com')->send(
+            new AdminMail($details)
 
 
-        // );
-        // }
+        );
+        }
 
 
 
