@@ -45,37 +45,62 @@ class ProductController extends Controller
     public function verify_trx(request $request)
     {
 
-
-
         $trx_id = $request->trans_id;
         $amount = $request->amount;
         $status = $request->status;
+        $ip = $request->ip();
 
-        // dd("hello");
+
+
+        if ($status == 'failed') {
+
+            Transaction::where('trx_ref', $trx_id)->where('status', 0)->update(['status' => 2]);
+
+            return redirect('user/dashboard')->with('error', 'Transaction Declined');
+        }
+
+
+
 
         if ($status == 'success') {
-            $getx =  Transaction::where('trx_ref', $trx_id)->where('status', 0)->first() ?? null;
 
-            if ($getx != null) {
+            $curl = curl_init();
 
-                User::where('id', Auth::id())->increment('wallet', $amount);
+            curl_setopt_array($curl, array(
+                CURLOPT_URL => 'https://web.enkpay.com/api/verify',
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => '',
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => 'POST',
+                CURLOPT_POSTFIELDS => array('trans_id' => "$trx_id"),
+            ));
+
+            $var = curl_exec($curl);
+            curl_close($curl);
+            $var = json_decode($var);
+
+            $status1 = $var->detail ?? null;
+            $amount2 = $var->price ?? null;
+
+
+            if ($status1 == 'success' && $amount == $amount2) {
+
                 Transaction::where('trx_ref', $trx_id)->where('status', 0)->update(['status' => 1]);
-
-
-
+                User::where('id', Auth::id())->increment('wallet', $amount);
 
                 $usr = User::where('id', Auth::id())->first() ?? null;
 
                 if ($usr->email != null) {
 
                     $data = array(
-                        'fromsender' => 'admin@twbnumbers.com.ng', 'TWBNumbers',
+                        'fromsender' => 'admin@oprime.com.ng', 'Oprime',
                         'subject' => "Wallet Funded",
                         'toreceiver' => Auth::user()->email,
                         'amount' => $amount,
                         'name' => Auth::user()->name,
-
-
 
                     );
 
@@ -87,24 +112,10 @@ class ProductController extends Controller
                     });
                 }
 
-
-
                 return redirect('user/dashboard')->with('message', "Wallet has been funded with $amount");
             }
+            return redirect('user/dashboard')->with('error', 'Transaction already confirmed or not found');
         }
-
-
-        if ($status == 'failed') {
-
-            Transaction::where('trx_ref', $trx_id)->where('status', 0)->update(['status' => 2]);
-
-
-
-
-            return redirect('user/dashboard')->with('error', 'Transaction Declined');
-        }
-
-        return redirect('user/dashboard')->with('error', 'Transaction Declined');
     }
 
 
