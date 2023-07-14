@@ -31,7 +31,7 @@ class PlanController extends Controller
      
 
 
-       return view('admin.plan.index',compact('item_logs','tNF', 'tDGV', 'tTK', 'tTN', 'request', 'tGV'));
+       return view('admin.plan.index',compact('item_logs','gv', 'ipv', 'exp', 'tkk', 'request'));
     }
 
     /**
