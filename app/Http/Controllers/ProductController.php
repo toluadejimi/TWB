@@ -82,8 +82,18 @@ class ProductController extends Controller
             curl_close($curl);
             $var = json_decode($var);
 
-            $status1 = $var->detail ?? null;
+           $status1 = $var->detail ?? null;
             $amount2 = $var->price ?? null;
+            $status2 = $var->status ?? null;
+
+            if($status2 == 'false'){
+                return redirect('user/dashboard')->with('error', 'Transaction already confirmed or not found');
+            }
+
+            if($status1 == null || $amount2 == null || $status2 == null ){
+                return redirect('user/dashboard')->with('error', 'Transaction already confirmed or not found');
+            }
+
 
 
             if ($status1 == 'success' && $amount == $amount2) {
