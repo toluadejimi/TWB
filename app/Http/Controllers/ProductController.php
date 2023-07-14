@@ -68,9 +68,6 @@ class ProductController extends Controller
             $trxstatus = Transaction::where('trx_ref', $trx_id)->first()->status ?? null;
 
             if ($trxstatus == 1) {
-
-                $message =  Auth::user()->name . "| is trying to fund  with | $request->trx_id  | " . number_format($request->amount, 2) . "\n\n IP ====> " . $request->ip();
-                send_notification($message);
                 return redirect('user/dashboard')->with('error', 'Transaction already confirmed or not found');
             }
 
