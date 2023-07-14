@@ -34,7 +34,7 @@ class DashboardController extends Controller
 
 
 
-        return view('admin.dashboard', compact('total_order', 'total_in', 'total_out', 'request', 'transactions', 'gv', 'tn', 'nf', 'total_user', 'total_funds_in_wallet', 'pending_ticket'));
+        return view('admin.dashboard', compact('total_order', 'total_in', 'total_out', 'request', 'transactions', 'gv', 'ipv', 'exp', 'tkk', 'total_user', 'total_funds_in_wallet', 'pending_ticket'));
     }
 
     public function dashboardData()

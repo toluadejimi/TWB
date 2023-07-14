@@ -62,7 +62,6 @@ class ProductController extends Controller
 
         if ($status == 'success') {
 
-
             $trxstatus = Transaction::where('trx_ref', $trx_id)->first()->status ?? null;
 
             if ($trxstatus == 1) {
