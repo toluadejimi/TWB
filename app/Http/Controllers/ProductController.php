@@ -64,6 +64,16 @@ class ProductController extends Controller
 
         if ($status == 'success') {
 
+
+            $trxstatus = Transaction::where('trx_ref', $trx_id)->first()->status ?? null;
+
+            if ($trxstatus == 1) {
+
+                $message =  Auth::user()->name . "| is trying to fund  with | $request->trx_id  | " . number_format($request->amount, 2) . "\n\n IP ====> " . $request->ip();
+                send_notification($message);
+                return redirect('user/dashboard')->with('error', 'Transaction already confirmed or not found');
+            }
+
             $curl = curl_init();
 
             curl_setopt_array($curl, array(
@@ -82,21 +92,12 @@ class ProductController extends Controller
             curl_close($curl);
             $var = json_decode($var);
 
-           $status1 = $var->detail ?? null;
+            $status1 = $var->detail ?? null;
             $amount2 = $var->price ?? null;
             $status2 = $var->status ?? null;
 
-            if($status2 == 'false'){
-                return redirect('user/dashboard')->with('error', 'Transaction already confirmed or not found');
-            }
 
-            if($status1 == null || $amount2 == null || $status2 == null ){
-                return redirect('user/dashboard')->with('error', 'Transaction already confirmed or not found');
-            }
-
-
-
-            if ($status1 == 'success' && $amount == $amount2) {
+            if ($status1 == 'success') {
 
                 Transaction::where('trx_ref', $trx_id)->where('status', 0)->update(['status' => 1]);
                 User::where('id', Auth::id())->increment('wallet', $amount);
@@ -124,6 +125,7 @@ class ProductController extends Controller
 
                 return redirect('user/dashboard')->with('message', "Wallet has been funded with $amount");
             }
+
             return redirect('user/dashboard')->with('error', 'Transaction already confirmed or not found');
         }
     }
@@ -212,7 +214,6 @@ class ProductController extends Controller
 
             ItemLog::where('id', $request->area_code)->delete();
             return redirect('user/dashboard')->with('message', "Log purchase successful");
-
         }
 
         //send mail
@@ -238,11 +239,11 @@ class ProductController extends Controller
 
 
 
-            $details = [
-                'subject' => 'A new customer purchase',
-                'name' => $data['toreceiver'],
-                'data'=> $data['logdata']
-                ];
+        $details = [
+            'subject' => 'A new customer purchase',
+            'name' => $data['toreceiver'],
+            'data' => $data['logdata']
+        ];
 
 
 
@@ -252,7 +253,7 @@ class ProductController extends Controller
 
 
         );
-    
+
 
 
 
