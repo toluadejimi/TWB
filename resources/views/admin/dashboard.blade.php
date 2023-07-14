@@ -173,9 +173,9 @@
 						<div class="row align-items-center">
 							<div class="col ml--2">
 								<h4 class="mb-0 text-muted">
-									{{ __('Text Now') }}
+									{{ __('IP Vanish') }}
 								</h4>
-								<h3>{{number_format($tn)}}</h3>
+								<h3>{{number_format($ipv)}}</h3>
 							</div>
 						</div>
 					</li>
@@ -187,9 +187,21 @@
 						<div class="row align-items-center">
 							<div class="col ml--2">
 								<h4 class="mb-0 text-muted">
-									 {{ __('Netflix') }}
+									 {{ __('Express Vpn') }}
 								</h4>
-								<h3>{{number_format($nf)}}</h3>
+								<h3>{{number_format($exp)}}</h3>
+
+							</div>
+						</div>
+					</li>
+
+					<li class="list-group-item px-0 ml-2">
+						<div class="row align-items-center">
+							<div class="col ml--2">
+								<h4 class="mb-0 text-muted">
+									 {{ __('Talkatone') }}
+								</h4>
+								<h3>{{number_format($tkk)}}</h3>
 
 							</div>
 						</div>

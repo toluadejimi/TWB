@@ -46,9 +46,7 @@ class ProductController extends Controller
     {
 
         $trx_id = $request->trans_id;
-        $amount = $request->amount;
         $status = $request->status;
-        $ip = $request->ip();
 
 
 
@@ -96,8 +94,8 @@ class ProductController extends Controller
 
             if ($status1 == 'success') {
 
-                Transaction::where('trx_ref', $trx_id)->where('status', 0)->update(['status' => 1]);
-                User::where('id', Auth::id())->increment('wallet', $amount);
+                Transaction::where('trx_ref', $trx_id)->update(['status' => 1]);
+                User::where('id', Auth::id())->increment('wallet', $amount2);
 
                 $usr = User::where('id', Auth::id())->first() ?? null;
 
@@ -107,7 +105,7 @@ class ProductController extends Controller
                         'fromsender' => 'admin@oprime.com.ng', 'Oprime',
                         'subject' => "Wallet Funded",
                         'toreceiver' => Auth::user()->email,
-                        'amount' => $amount,
+                        'amount' => $amount2,
                         'name' => Auth::user()->name,
 
                     );
@@ -120,7 +118,7 @@ class ProductController extends Controller
                     });
                 }
 
-                return redirect('user/dashboard')->with('message', "Wallet has been funded with $amount");
+                return redirect('user/dashboard')->with('message', "Wallet has been funded with $amount2");
             }
 
             return redirect('user/dashboard')->with('error', 'Transaction already confirmed or not found');

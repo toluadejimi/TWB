@@ -24,8 +24,9 @@ class DashboardController extends Controller
         $pending_ticket = Support::where('status', 2)->count();
         $total_user = User::select('*')->count();
         $gv = ItemLog::where('item_id', 1)->count();
-        $tn = ItemLog::where('item_id', 2)->count();
-        $nf = ItemLog::where('item_id', 3)->count();
+        $ipv = ItemLog::where('item_id', 2)->count();
+        $exp = ItemLog::where('item_id', 3)->count();
+        $tkk = ItemLog::where('item_id', 5)->count();
         $transactions = Transaction::latest()->paginate('10');
         $total_in = Transaction::where('type', 1)->sum('amount');
         $total_out = Transaction::where('type', 2)->sum('amount');

@@ -24,11 +24,10 @@ class PlanController extends Controller
     public function index(request $request)
     {
         $item_logs=ItemLog::latest()->paginate(20);
-       $tNF=ItemLog::where('item_id', 5)->count();
-       $tTN=ItemLog::where('item_id', 2)->count();
-       $tGV=ItemLog::where('item_id', 1)->count();
-       $tDGV=ItemLog::where('item_id', 3)->count();
-       $tTK=ItemLog::where('item_id', 4)->count();
+        $gv = ItemLog::where('item_id', 1)->count();
+        $ipv = ItemLog::where('item_id', 2)->count();
+        $exp = ItemLog::where('item_id', 3)->count();
+        $tkk = ItemLog::where('item_id', 5)->count();
      
 
 

@@ -22,7 +22,7 @@
 						<div class="row">
 							<div class="col">
 								<span class="h2 font-weight-bold mb-0 total-transfers" id="total-device">
-									{{ $tGV }}
+									{{ $gv }}
 								</span>
 							</div>
 							<div class="col-auto">
@@ -43,7 +43,7 @@
 						<div class="row">
 							<div class="col">
 								<span class="h2 font-weight-bold mb-0 total-transfers" id="total-active">
-									{{ $tDGV }}
+									{{ $ipv }}
 								</span>
 							</div>
 							<div class="col-auto">
@@ -53,7 +53,7 @@
 							</div>
 						</div>
 						<p class="mt-3 mb-0 text-sm">
-						</p><h5 class="card-title  text-muted mb-0">{{ __('Domain Gv') }}</h5>
+						</p><h5 class="card-title  text-muted mb-0">{{ __('Ipvanish') }}</h5>
 						<p></p>
 					</div>
 				</div>
@@ -64,7 +64,7 @@
 						<div class="row">
 							<div class="col">
 								<span class="h2 font-weight-bold mb-0 completed-transfers" id="total-inactive">
-									{{ $tTN }}
+									{{ $exp }}
 								</span>
 							</div>
 							<div class="col-auto">
@@ -74,7 +74,7 @@
 							</div>
 						</div>
 						<p class="mt-3 mb-0 text-sm">
-						</p><h5 class="card-title  text-muted mb-0">{{ __('TextNow') }}</h5>
+						</p><h5 class="card-title  text-muted mb-0">{{ __('Express Vpn') }}</h5>
 						<p></p>
 					</div>
 				</div>
@@ -86,7 +86,7 @@
 						<div class="row">
 							<div class="col">
 								<span class="h2 font-weight-bold mb-0 completed-transfers" id="total-inactive">
-									{{ $tTK }}
+									{{ $tkk }}
 								</span>
 							</div>
 							
@@ -102,7 +102,9 @@
 					</div>
 				</div>
 			</div>
-		
+
+
+			
 		</div>
 	</div>
 </div>    
